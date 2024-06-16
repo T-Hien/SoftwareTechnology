@@ -27,3 +27,4 @@ jobs:
             cd /path/to/your/app
             git pull origin main
             ./deploy.sh  # Example deployment script
+
