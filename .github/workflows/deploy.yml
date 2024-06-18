@@ -16,7 +16,7 @@ jobs:
         run: sudo apt-get install -y openssh-client
 
       - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: appleboy/ssh-action@master
         with:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
      
