@@ -25,7 +25,6 @@ jobs:
         with:
           host: 127.17.0.1
           username: hien
-          password: 352636
           port: 22
           script: |
             cd /var/www/html/wordpress
