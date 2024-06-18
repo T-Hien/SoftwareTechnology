@@ -24,7 +24,13 @@ jobs:
       - name: Check SSH
         run: |
             nc -zv ${{ secrets.SERVER_SSH_PORT }} 22
-            
+
+      - name: Check SSH Username
+        run: |
+            echo "Current user $(whoami)"
+            echo "User enviroment variable: $USER"
+
+      
       - name: Test SSH connection
         run: |
              ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@$${{ secrets.SERVER_SSH_PORT }} 'echo "SSH"'
