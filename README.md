@@ -37,8 +37,8 @@ services:
       WORDPRESS_DB_PASSWORD: Thuhien@352636
       WORDPRESS_DB_NAME: wordpress_db
     volumes:
-      - ./src:/var/www/html:rw
-      - ./wordpress/wp-config.php:/var/www/html/wp-config.php:ro
+      - ./html:/var/www/html
+
 
   mysql:
     container_name: mysql
@@ -61,6 +61,10 @@ services:
     volumes:
       - ./nginx/conf:/etc/nginx/sites-enabled/wordpress
       - ./wordpress:/var/www/html/wp-config.php
+
+volumes:
+  db_data:
+  wordpress_data:
 
 volumes:
   db_data:
