@@ -3,19 +3,20 @@ https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-comp
 
 ///////////////
 
-Removing nginx
+docker-compose up -d
 Starting wordpress ... 
-Starting wordpress            ... error
-Recreating 3fd2d29be6dd_nginx ... 
+Starting wordpress ... error
+Starting nginx     ... 
 
-ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file Recreating 3fd2d29be6dd_nginx ... error
+ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file Starting nginx     ... error
 
-ERROR: for 3fd2d29be6dd_nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
+ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
 
 ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file system
 
 ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
 ERROR: Encountered errors while bringing up the project.
+
 
 
 //////////////////////////////
