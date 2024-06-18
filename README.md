@@ -18,7 +18,13 @@ ERROR: for wordpress  Cannot start service wordpress: error while creating mount
 ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/wordpress': mkdir /var/www: read-only file system
 ERROR: Encountered errors while bringing up the project.
 
-
+///////////////
+docker-compose ps
+  Name                 Command                State            Ports       
+---------------------------------------------------------------------------
+mysql       docker-entrypoint.sh mysqld      Up         3306/tcp, 33060/tcp
+nginx       /docker-entrypoint.sh ngin ...   Exit 128                      
+wordpress   docker-entrypoint.sh apach ...   Exit 128    
 
 
 //////////////////////////////
