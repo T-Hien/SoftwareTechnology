@@ -17,8 +17,8 @@ jobs:
         run:  sudo apt-get install -y openssh-client
       - name: Test SSH connection
         run: |
-             ssh -o StrictHostKeyChecking=no -p 22 hien@$localhost "echo 'SSH connection successful'"
-
+             ssh -o StrictHostKeyChecking=no -p 22 hien@$10.0.2.15 "echo 'SSH connection successful'"
+        timeout_minutes: 5
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
