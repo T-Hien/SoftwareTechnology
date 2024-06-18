@@ -29,11 +29,6 @@ jobs:
         run: |
             echo "Current user $(whoami)"
             echo "User enviroment variable: ${{ secrets.SERVER_USERNAME}}"
-
-      
-      - name: Test SSH connection
-        run: |
-             ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@$${{ secrets.SERVER_IP}} 'echo "SSH"'
              
       - name: Install SSH client
         run:  sudo apt-get install -y openssh-client
