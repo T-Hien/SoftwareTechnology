@@ -28,7 +28,7 @@ jobs:
       - name: Check SSH Username
         run: |
             echo "Current user $(whoami)"
-            echo "User enviroment variable: $USER"
+            echo "User enviroment variable: ${{ secrets.SERVER_USERNAME}}"
 
       
       - name: Test SSH connection
