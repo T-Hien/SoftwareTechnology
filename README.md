@@ -1,24 +1,33 @@
 https://chatgpt.com/share/3b89dd1c-12d1-439f-8fb2-b5642ac5764a
-docker-compose up -d
-docker-compose up -d
-Creating network "www_default" with the default driver
-Pulling nginx (nginx:latest)...
-latest: Pulling from library/nginx
-2cc3ae149d28: Already exists
-a97f9034bc9b: Pull complete
-9571e65a55a3: Pull complete
-0b432cb2d95e: Pull complete
-24436676f2de: Pull complete
-928cc9acedf0: Pull complete
-ca6fb48c6db4: Pull complete
-Digest: sha256:56b388b0d79c738f4cf51bbaf184a14fab19337f4819ceb2cae7d94100262de8
-Status: Downloaded newer image for nginx:latest
-Creating www_db_1 ... 
-Creating nginx    ... 
-Creating nginx    ... error
 
-ERROR: for nginx  Cannot start service nginx: driver failed programming external connectivity on endpoint nginx (18bd723551a4992746d6100e7e641cb3647bc9ffec4db69Creating www_db_1 ... done
- address already in use
+docker-compose up -d
+www_db_1 is up-to-date
+Recreating nginx ... 
 
-ERROR: for nginx  Cannot start service nginx: driver failed programming external connectivity on endpoint nginx (18bd723551a4992746d6100e7e641cb3647bc9ffec4db691ee210c9aaa485097): Error starting userland proxy: listen tcp4 0.0.0.0:80: bind: address already in use
-ERROR: Encountered errors while bringing up the project.
+ERROR: for nginx  'ContainerConfig'
+
+ERROR: for nginx  'ContainerConfig'
+Traceback (most recent call last):
+  File "docker-compose", line 3, in <module>
+  File "compose/cli/main.py", line 81, in main
+  File "compose/cli/main.py", line 203, in perform_command
+  File "compose/metrics/decorator.py", line 18, in wrapper
+  File "compose/cli/main.py", line 1186, in up
+  File "compose/cli/main.py", line 1182, in up
+  File "compose/project.py", line 702, in up
+  File "compose/parallel.py", line 108, in parallel_execute
+  File "compose/parallel.py", line 206, in producer
+  File "compose/project.py", line 688, in do
+  File "compose/service.py", line 581, in execute_convergence_plan
+  File "compose/service.py", line 503, in _execute_convergence_recreate
+  File "compose/parallel.py", line 108, in parallel_execute
+  File "compose/parallel.py", line 206, in producer
+  File "compose/service.py", line 496, in recreate
+  File "compose/service.py", line 615, in recreate_container
+  File "compose/service.py", line 334, in create_container
+  File "compose/service.py", line 922, in _get_container_create_options
+  File "compose/service.py", line 962, in _build_container_volume_options
+  File "compose/service.py", line 1549, in merge_volume_bindings
+  File "compose/service.py", line 1579, in get_container_data_volumes
+KeyError: 'ContainerConfig'
+[14600] Failed to execute script docker-compose
