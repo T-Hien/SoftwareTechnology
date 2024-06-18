@@ -31,3 +31,32 @@ Traceback (most recent call last):
   File "compose/service.py", line 1579, in get_container_data_volumes
 KeyError: 'ContainerConfig'
 [14600] Failed to execute script docker-compose
+
+version: '3'
+
+services:
+  
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wordpress_user
+      MYSQL_PASSWORD: Thuhien@352636
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8888:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/sites-enabled/wordpress:ro
+      - ./html:/usr/share/nginx/html:ro
+    restart: always 
+    networks:
+      -default  
+
+    networks:
+      default:
+
