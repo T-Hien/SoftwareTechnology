@@ -20,14 +20,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-
-      - name: Debug SSH connection 
-        run: | 
-          echo "Testing SSH connection to ${secrets.SERVER_USERNAME}@${secrets.SERVER_IP} -p ${secrets.SERVER_POST}" ssh -o StrictHostKeyChecking=no -v ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} 'echo "SSH connection successful"'
-      
+     
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP}} -p ${{ secrets.SERVER_PORT }} <<EOF
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP}} -p ${{ secrets.SERVER_POST}} <<EOF
           cd /var/www/html/wordpress
           git pull origin main
           sudo systemctl restart nginx
