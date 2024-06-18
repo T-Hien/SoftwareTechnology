@@ -15,18 +15,14 @@ jobs:
 
       - name: Install SSH client
         run:  sudo apt-get install -y openssh-client
-      - name: Test SSH connection
-        run: |
-             ssh -o StrictHostKeyChecking=no -p 22 hien@$10.0.2.15 "echo 'SSH connection successful'"
-        timeout_minutes: 5
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          port: ${{ secrets.SERVER_SSH_PORT }}
+          host: 10.0.2.15
+          username: hien
+          password: 352636
+          port: 22
           script: |
             cd /var/www/html/wordpress
             git pull origin main
