@@ -2,21 +2,27 @@ https://chatgpt.com/share/3b89dd1c-12d1-439f-8fb2-b5642ac5764a
 https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-compose-nginx-apache-ssl/
 
 ///////////////
-
-Creating nginx     ... error
+docker-compose up -d
+Creating network "www_default" with the default driver
 Creating wordpress ... error
-ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
+Creating nginx     ... 
+Creating mysql     ... 
 
-ERROR: for wordpress  Cannot start service wordpress: error while creating mountCreating mysql     ... done
+ERROR: for wordpress  Cannot start service wordpress: error while creating mountCreating nginx     ... error
 system
 
-ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
+ERROR: for nginx  Cannot start service nginx: error while creating mount source Creating mysql     ... done
 
 ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file system
+
+ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/wordpress': mkdir /var/www: read-only file system
 ERROR: Encountered errors while bringing up the project.
 
 
+
+
 //////////////////////////////
+
 version: "3.9"
 
 services:
@@ -25,12 +31,13 @@ services:
     image: wordpress:php8.3
     restart: always
     environment:
-      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_HOST: localhost
       WORDPRESS_DB_USER: wordpress_user
       WORDPRESS_DB_PASSWORD: Thuhien@352636
       WORDPRESS_DB_NAME: wordpress_db
     volumes:
-      - ./html:/var/www/html
+
+      - ./wordpress/wp-config.php:/var/www/html/wp-config.php
 
 
   mysql:
@@ -55,9 +62,6 @@ services:
       - ./nginx/conf:/etc/nginx/sites-enabled/wordpress
       - ./wordpress:/var/www/html/wp-config.php
 
-volumes:
-  db_data:
-  wordpress_data:
 
 volumes:
   db_data:
