@@ -68,3 +68,51 @@ docker-compose up -d
 Creating network "www_default" with the default driver
 Creating nginx    ... done
 Creating www_db_1 ... done
+
+worker_processes 1;
+
+events {
+	worker_connections 1024;
+}
+
+http {
+	include mime.types;
+	default_type application/octet-stream;
+	
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+
+	server {
+		listen 80;
+		listen [::]:80;
+		server_name localhost;
+		root /var/www/html;
+		index index.php index.html index.htm index.nginx-debian.html;
+		location / {
+
+		        try_files $uri $uri/ /index.php?$args;
+		        include proxy_params;
+		}
+		location ~ ^/database/.+\.php$ {
+			proxy_pass http://10.0.2.15;    
+		        proxy_set_header Host $host;
+		        proxy_set_header X-Real-IP $remote_addr;
+		        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		        proxy_set_header X-Forwarded-Proto $scheme;
+			proxy_redirect off;
+	}
+		location ~ \.php$ {
+		        include snippets/fastcgi-php.conf;
+		        fastcgi_pass unix:var/run/php/php8.3-fpm.sock;
+		        include fastcgi_params;
+		}
+
+		location ~ /\.ht {
+		
+			deny all;
+		}
+		gzip on;
+		gzip_types text/plain application/xml text/css text/js;
+		gzip_vary on;
+	}
+}
