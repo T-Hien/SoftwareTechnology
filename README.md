@@ -60,3 +60,11 @@ services:
     networks:
       default:
 
+/////////////
+403 Forbidden
+nginx/1.27.0
+/////////
+docker-compose up -d
+Creating network "www_default" with the default driver
+Creating nginx    ... done
+Creating www_db_1 ... done
