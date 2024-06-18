@@ -4,43 +4,31 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Debug SSH connection 
-        run: | 
-          ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no hien@${{ secrets.SERVER_IP}} -p 22 'echo "SSH connection successful"'
-      
-      - name: Check key
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Add SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-            ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-      
-      - name: Ping remote server
-        run: |
-            ping -c 4 ${{ secrets.SERVER_IP }}
-      - name: Check SSH
-        run: |
-            nc -zv ${{ secrets.SERVER_SSH_POST }} 22
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
-      - name: Check SSH Username
-        run: |
-            echo "Current user $(whoami)"
-            echo "User enviroment variable: ${{ secrets.SERVER_USERNAME}}"
+      - name: Verify SSH connection
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} 'echo "SSH connection successful"'
 
-      - name: Install SSH client
-        run:  sudo apt-get install -y openssh-client
-
-      - name: Deploy via server
+      - name: Deploy to server
         run: |
-            ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@${{ secrets.SERVER_SSH_POST}} <<EOF
-            cd /var/www/html/wordpress
-            git pull origin main
-            sudo systemctl restart nginx
-            sudo systemctl restart php8.3-fpm
-            EOF
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} <<EOF
+          cd /var/www/html/wordpress
+          git pull origin main
+          sudo systemctl restart nginx
+          sudo systemctl restart php8.3-fpm
+          EOF
