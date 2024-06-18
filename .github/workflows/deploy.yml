@@ -22,7 +22,7 @@ jobs:
      
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP}} -p ${{ secrets.SERVER_POST}} <<EOF
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP}} -p 22 <<EOF
           cd /var/www/html/wordpress
           git pull origin main
           sudo systemctl restart nginx
