@@ -12,7 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-    
+
+      - name: Debug SSH connection 
+        run: | 
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'echo "SSH connection successful"'
+      
       - name: Check key
         uses: webfactory/ssh-agent@v0.5.3
         with:
