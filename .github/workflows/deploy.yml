@@ -23,7 +23,7 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 127.17.0.1
+          host: 10.0.2.15
           username: hien
           password: 352636
           port: 22
