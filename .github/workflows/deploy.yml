@@ -30,22 +30,12 @@ jobs:
             echo "Current user $(whoami)"
             echo "User enviroment variable: ${{ secrets.SERVER_USERNAME}}"
 
-      
-      - name: Test SSH connection
-        run: |
-             ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@$${{ secrets.SERVER_SSH_PORT }} 'echo "SSH"'
-             
       - name: Install SSH client
         run:  sudo apt-get install -y openssh-client
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_SSH_PORT }}
-          username: hien
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: 22
-          script: |
+      - name: Deploy via server
+        run: |
+            sh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@$${{ secrets.SERVER_SSH_PORT }} <<EOF'
             cd /var/www/html/wordpress
             git pull origin main
             sudo systemctl restart nginx
