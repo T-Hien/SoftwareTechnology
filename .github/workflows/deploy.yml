@@ -14,7 +14,7 @@ jobs:
 
       - name: Debug SSH connection 
         run: | 
-          ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=yes ${{secrets.SERVER_USERNAME}}@${{ secrets.SERVER_SSH_PORT }} 'echo "SSH connection successful"'      
+          ssh-copy-id -i ~/.ssh/id_rsa.pub ${{secrets.SERVER_USERNAME}}@${{ secrets.SERVER_SSH_PORT }} 'echo "SSH connection successful"'      
       - name: Check key
         uses: webfactory/ssh-agent@v0.5.3
         with:
