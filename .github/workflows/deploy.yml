@@ -16,6 +16,7 @@ jobs:
       - name: Check key
         run: |
             ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+      
       - name: Ping remote server
         run: |
             ping -c 4 ${{ secrets.SERVER_SSH_PORT }}
