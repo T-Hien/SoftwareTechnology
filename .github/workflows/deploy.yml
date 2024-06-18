@@ -16,6 +16,13 @@ jobs:
       - name: Ping remote server
         run: |
             ping -c 4 ${{ secrets.SERVER_SSH_PORT }}
+      - name: Check SSH
+        run: |
+            nc -zv ${{ secrets.SERVER_SSH_PORT }} 22
+            
+      - name: Test SSH connection
+        run: |
+             ssh -o StrictHostKeyChecking=no -p 22 hien@$127.17.0.1 'echo "SSH"'
 
       - name: Install SSH client
         run:  sudo apt-get install -y openssh-client
