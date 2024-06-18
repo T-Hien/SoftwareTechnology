@@ -1,3 +1,3 @@
-Run ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -i /home/***/.ssh/id_rsa ***@ -p *** 'echo "SSH connection successful"'
-Warning: Identity file /home/***/.ssh/id_rsa not accessible: No such file or directory.
-Bad port '***'
+Run ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no ***@*** -p 22 'echo "SSH connection successful"'
+Warning: Permanently added '***' (ED25519) to the list of known hosts.
+***@***: Permission denied (publickey,password)
