@@ -15,7 +15,7 @@ jobs:
 
       - name: Install SSH client
         run:  sudo apt-get install -y openssh-client
-        - name: Test SSH connection
+      - name: Test SSH connection
         run: |
              ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_SSH_PORT }} ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
 
