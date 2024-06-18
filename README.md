@@ -8,14 +8,18 @@ Starting wordpress ...
 Starting wordpress ... error
 Starting nginx     ... 
 
-ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file Starting nginx     ... error
+Starting nginx                    ... error
+
+Recreating 8d1f01f33c72_wordpress ... error
+path '/var/www/nginx/conf': mkdir /var/www: read-only file system
+
+ERROR: for 8d1f01f33c72_wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/html': mkdir /var/www: read-only file system
 
 ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
 
-ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file system
-
-ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/nginx/conf': mkdir /var/www: read-only file system
+ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/html': mkdir /var/www: read-only file system
 ERROR: Encountered errors while bringing up the project.
+
 
 
 
