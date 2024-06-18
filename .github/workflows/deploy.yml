@@ -23,7 +23,7 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 127.17.0.1
+          host: ${{ secrets.SERVER_SSH_PORT }}
           username: hien
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
