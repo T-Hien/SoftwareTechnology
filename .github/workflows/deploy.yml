@@ -32,15 +32,16 @@ jobs:
         run: nc -zv ${{ secrets.SERVER_HOST }} 22
       
       # Triển khai ứng dụng bằng lệnh SSH
+      # Deploy application using SSH
       - name: Deploy application
         run: |
           ssh -o StrictHostKeyChecking=no \
               ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} \
               -p ${{ secrets.SERVER_PORT }} << 'EOF'
-            cd /var/www/html/wordpress  # Đường dẫn của WordPress trên máy chủ
-            git pull origin main  # Lấy mã nguồn mới nhất từ repository
-            sudo systemctl restart nginx  # Khởi động lại NGINX để áp dụng thay đổi
-            sudo systemctl restart php8.3-fpm  # Khởi động lại PHP-FPM
+            cd /var/www/html/wordpress  # Path to WordPress on the server
+            git pull origin main  # Pull the latest source from the repository
+            sudo systemctl restart nginx  # Restart NGINX to apply changes
+            sudo systemctl restart php8.3-fpm  # Restart PHP-FPM
           EOF
 
       # Kiểm tra kết quả triển khai
