@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main
+      - main  # Thay đổi trên nhánh main sẽ kích hoạt workflow
 
 jobs:
   deploy:
@@ -13,25 +13,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Check key
+      # Cài đặt SSH client để kết nối tới máy chủ
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+      
+      # Sử dụng webfactory/ssh-agent để sử dụng SSH key từ secrets
+      - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-            ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-      
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      # Ping máy chủ để kiểm tra kết nối
       - name: Ping remote server
-        run: |
-            ping -c 4 ${{ secrets.SERVER_IP }}
-      - name: Check SSH
-        run: |
-            nc -zv ${{ secrets.SERVER_IP}} 22
+        run: ping -c 4 ${{ secrets.SERVER_HOST }}
 
-      - name: Check SSH Username
+      # Kiểm tra kết nối SSH tới máy chủ
+      - name: Check SSH connectivity
+        run: nc -zv ${{ secrets.SERVER_HOST }} 22
+      
+      # Triển khai ứng dụng bằng lệnh SSH
+      - name: Deploy application
         run: |
-            echo "Current user $(whoami)"
-            echo "User enviroment variable: ${{ secrets.SERVER_USERNAME}}"
-             
-      - name: Install SSH client
-        run:  sudo apt-get install -y openssh-client
+          ssh -o StrictHostKeyChecking=no \
+              ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} \
+              -p ${{ secrets.SERVER_PORT }} << 'EOF'
+            cd /var/www/html/wordpress  # Đường dẫn của WordPress trên máy chủ
+            git pull origin main  # Lấy mã nguồn mới nhất từ repository
+            sudo systemctl restart nginx  # Khởi động lại NGINX để áp dụng thay đổi
+            sudo systemctl restart php8.3-fpm  # Khởi động lại PHP-FPM
+          EOF
 
-    
-
+      # Kiểm tra kết quả triển khai
+      - name: Check deployment result
+        run: |
+          curl -sI http://${{ secrets.SERVER_HOST }}  # Kiểm tra trang chủ đã hoạt động
+          curl -sI http://${{ secrets.SERVER_HOST }}/wp-admin  # Kiểm tra trang quản trị WordPress
