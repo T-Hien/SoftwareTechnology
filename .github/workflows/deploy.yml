@@ -35,7 +35,7 @@ jobs:
 
       - name: Deploy via server
         run: |
-            sh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@$${{ secrets.SERVER_SSH_PORT }} <<EOF'
+            ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@$${{ secrets.SERVER_SSH_PORT }} <<'EOF'
             cd /var/www/html/wordpress
             git pull origin main
             sudo systemctl restart nginx
