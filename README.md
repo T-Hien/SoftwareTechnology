@@ -4,20 +4,15 @@ https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-comp
 ///////////////
 docker-compose up -d
 Creating network "www_default" with the default driver
-Creating wordpress ... error
-Creating nginx     ... 
-Creating mysql     ... 
+Creating mysql ... 
+Creating nginx     ... error
+Creating wordpress ... 
 
-ERROR: for wordpress  Cannot start service wordpress: error while creating mountCreating nginx     ... error
-system
+Creating mysql     ... done
+path '/var/lib/docker/volumes/wordpress_data': mkdir /var/lib/docker: read-only Creating wordpress ... done
 
-ERROR: for nginx  Cannot start service nginx: error while creating mount source Creating mysql     ... done
-
-ERROR: for wordpress  Cannot start service wordpress: error while creating mount source path '/var/www/wordpress/wp-config.php': mkdir /var/www: read-only file system
-
-ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/www/wordpress': mkdir /var/www: read-only file system
+ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/lib/docker/volumes/wordpress_data': mkdir /var/lib/docker: read-only file system
 ERROR: Encountered errors while bringing up the project.
-
 ///////////////
 docker-compose ps
   Name                 Command                State            Ports       
