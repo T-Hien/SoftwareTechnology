@@ -18,7 +18,7 @@ jobs:
       - name: Add SSH key
         uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
      
       - name: Deploy to server
         run: |
