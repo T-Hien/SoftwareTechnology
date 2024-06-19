@@ -19,7 +19,7 @@ jobs:
       
       # Sử dụng webfactory/ssh-agent để sử dụng SSH key từ secrets
       - name: Setup SSH key
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v1.0.3
         with:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
