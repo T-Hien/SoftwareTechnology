@@ -4,6 +4,8 @@ https://chatgpt.com/share/669a230b-8eb2-4d10-ad8e-ba2d22cbc71b
 
 https://chatgpt.com/share/db0dc257-a2d5-47a3-b758-90073c472651
 
+https://chatgpt.com/c/c7649b09-a87f-4bf8-8d8d-39821a5d32eb
+
 https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-compose-nginx-apache-ssl/
 
 ///////////////
