@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main  # Trigger khi có thay đổi trên nhánh main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
