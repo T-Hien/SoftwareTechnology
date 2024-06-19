@@ -29,7 +29,6 @@ jobs:
 
       - name: Start PHP-FPM and Nginx
         run: |
-          sudo service php8.3-fpm start
           sudo service nginx start
 
       - name: Download WordPress
