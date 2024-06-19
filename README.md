@@ -6,6 +6,18 @@ https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-comp
 
 ///////////////
 
+git push -u origin main 
+Username for 'https://github.com': T-Hien
+Password for 'https://T-Hien@github.com': 
+To https://github.com/T-Hien/SoftwareTechnology.git
+ ! [rejected]          main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/T-Hien/SoftwareTechnology.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
 
 sudo git add .
 error: 'nginx/' does not have a commit checked out
