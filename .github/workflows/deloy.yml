@@ -32,7 +32,7 @@ jobs:
         run: nc -zv ${{ secrets.SERVER_SSH_HOST }} 22
       
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
+
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_USERNAME}}
