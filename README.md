@@ -5,24 +5,30 @@ https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-comp
 
 ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/lib/docker/volumes/wordpress_data': mkdir /var/lib/docker: read-only file system
 
-Lỗi triển khai CI/CD trên github actions: Run ssh -o StrictHostKeyChecking=no \
-option requires an argument -- p
-usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface]
-           [-b bind_address] [-c cipher_spec] [-D [bind_address:]port]
-           [-E log_file] [-e escape_char] [-F configfile] [-I pkcs11]
-           [-i identity_file] [-J [user@]host[:port]] [-L address]
-           [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option] [-p port]
-           [-Q query_option] [-R address] [-S ctl_path] [-W host:port]
-           [-w local_tun[:remote_tun]] destination [command [argument ...]] chạy lệnh - name: Deploy application
-        run: |
-          ssh -o StrictHostKeyChecking=no \
-              ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_SSH_HOST }} \
-              -p ${{ secrets.SERVER_PORT }} << 'EOF'
-            cd /var/www/html/wordpress  # Đường dẫn tới WordPress trên máy chủ
-            git pull origin main  # Lấy mã nguồn mới nhất từ repository
-            sudo systemctl restart nginx  # Khởi động lại NGINX để áp dụng thay đổi
-            sudo systemctl restart php8.3-fpm  # Khởi động lại PHP-FPM
-          EOF
+Run echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+Run entrypoint.sh
+Will download drone-ssh-1.7.4-linux-amd64 from https://github.com/appleboy/drone-ssh/releases/download/v1.7.4
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+
+100 5580k  100 5580k    0     0  29.4M      0 --:--:-- --:--:-- --:--:-- 29.4M
+======CMD======
+cd /var/www/html/wordpress
+git pull origin main
+sudo systemctl restart nginx
+sudo systemctl restart php8.3-fpm
+./deploy.sh
+
+/*****/
+
+
+
+======END======
+2024/06/19 03:15:28 ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey], no supported methods remain
+Error: Process completed with exit code 1.
 
 
 
