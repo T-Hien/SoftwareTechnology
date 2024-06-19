@@ -1,52 +1,77 @@
-name: Deploy to Server
+name: CI/CD Pipeline for WordPress with Nginx and Reverse Proxy
 
 on:
   push:
     branches:
       - main  # Thay đổi trên nhánh main sẽ kích hoạt workflow
- 
+  pull_request:
+    branches:
+      - main  # Pull request vào nhánh main cũng sẽ kích hoạt workflow
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      
-      # Cài đặt SSH client để kết nối tới máy chủ
-      - name: Install SSH client
-        run: sudo apt-get install -y openssh-client
-      
-      # Sử dụng webfactory/ssh-agent để sử dụng SSH key từ secrets
-      - name: Setup SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+        uses: actions/checkout@v4
 
-      # Ping máy chủ để kiểm tra kết nối
-      - name: Ping remote server
-        run: ping -c 4 ${{ secrets.SERVER_SSH_HOST}}
-
-      # Kiểm tra kết nối SSH tới máy chủ
-      - name: Check SSH connectivity
-        run: nc -zv ${{ secrets.SERVER_SSH_HOST }} 22
-      
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_SSH_HOST }}
-          username: ${{ secrets.SERVER_USERNAME}}
-          key: ${{ secrets.SERVER_SSH_KEY}}
-          port: 22
-          script: |
-            cd /var/www/html/wordpress
-            git pull origin main
-            sudo systemctl restart nginx
-            sudo systemctl restart php8.3-fpm
-            ./deploy.sh
-
-      # Kiểm tra kết quả triển khai
-      - name: Check deployment result
+      - name: Install PHP, Nginx, MySQL, and other dependencies
         run: |
-          curl -sI http://${{ secrets.SERVER_SSH_HOST }}  # Kiểm tra trang chủ đã hoạt động
-          curl -sI http://${{ secrets.SERVER_SSH_HOST }}/wp-admin  # Kiểm tra trang quản trị WordPress
+          sudo apt-get update
+          sudo apt-get install -y php-fpm nginx mysql-server php-mysql unzip
+
+      - name: Configure Nginx
+        run: |
+          sudo cp nginx-configs/nginx.conf /etc/nginx/nginx.conf
+          sudo cp nginx-configs/default /etc/nginx/sites-available/default
+          sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+      - name: Start PHP-FPM and Nginx
+        run: |
+          sudo service php8.3-fpm start
+          sudo service nginx start
+
+      - name: Download WordPress
+        run: |
+          wget -q https://wordpress.org/latest.zip
+          unzip -qq latest.zip -d wordpress
+
+      - name: Configure WordPress
+        run: |
+          sudo cp -r wordpress/* /var/www/html/
+          sudo chown -R www-data:www-data /var/www/html/
+          sudo find /var/www/html/ -type d -exec chmod 755 {} \;
+          sudo find /var/www/html/ -type f -exec chmod 644 {} \;
+          sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+          sudo sed -i 's/database_name_here/wordpress/' /var/www/html/wp-config.php
+          sudo sed -i 's/username_here/root/' /var/www/html/wp-config.php
+          sudo sed -i 's/password_here/password/' /var/www/html/wp-config.php
+          sudo sed -i 's/localhost/127.0.0.1/' /var/www/html/wp-config.php
+
+      - name: Test WordPress
+        run: |
+          curl -s localhost
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Nginx for Reverse Proxy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx
+
+      - name: Configure Reverse Proxy
+        run: |
+          sudo cp nginx/nginx.conf /etc/nginx/nginx.conf
+          sudo cp nginx/default /etc/nginx/sites-available/default
+          sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+      - name: Start Nginx Reverse Proxy
+        run: |
+          sudo service nginx start
