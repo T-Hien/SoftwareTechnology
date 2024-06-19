@@ -1,0 +1,30 @@
+2024-06-16T01:08:14+00:00 DEBUG POST: https://ads.tiktok.com/marketing_api/api/developer/app/create_auto_approve/
+
+{"business_platform":"PROD","smb_id":"tt4b_woocommerce_666e3afe887e7http100215wp-admin","smb_name":"PROD","redirect_url":"http:\/\/10.0.2.15\/wp-admin\/"}
+ ajax: no
+2024-06-16T01:08:14+00:00 DEBUG Tt4b_Mapi_Class::create_open_source_app: Response: 
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Tt-Logid: 20240616010813F8F01ED3ADABD8A90AFF,20240616010813F8F01ED3ADABD8A90AFF
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+x-tt-trace-host: 0185de2db2735d1311e2b2ee9368179f4a9f9f373318485e6466450beedc027316b5e38c1cf817e9612e80f1c0261993d3a1b2ed3865f52a23aa093b3abbe7257d7849cc7c7387359e60c7c25a4f68f13a4aa09a0e2800b77af8d8190ec8631e6fd79234dcb781ec93ac8ea8741aa97589
+x-tt-trace-id: 00-240616010813F8F01ED3ADABD8A90AFF-2300AE4F412D30E2-00
+Server: TLB
+Content-Length: 224
+X-Origin-Response-Time: 55,23.48.107.55
+X-Akamai-Request-ID: fb08906b.4d770805
+Date: Sun, 16 Jun 2024 01:08:14 GMT
+X-Cache: TCP_MISS from a23-32-74-84.deploy.akamaitechnologies.com (AkamaiGHost/11.5.2-56372494) (-)
+Connection: close
+X-Cache-Remote: TCP_MISS from a23-48-107-55.deploy.akamaitechnologies.com (AkamaiGHost/11.5.2-56372494) (-)
+x-tt-trace-tag: id=16;cdn-cache=miss;type=dyn
+Server-Timing: cdn-cache; desc=MISS, edge; dur=41, origin; dur=55
+Server-Timing: inner; dur=50
+X-Parent-Response-Time: 93,23.32.74.84
+
+{"code":0,"msg":"ok","data":{"redirect_uri":"http:\/\/10.0.2.15\/wp-admin\/","app_secret":"f66263d003356a2d0c79a2ce6cfbc6f6bd36da29","external_data_key":"949a6c5d-eda3-48b9-9e89-c8a71981cfcd","app_id":"7380901705124151304"}}
+2024-06-16T02:03:25+00:00 DEBUG Tt4b_Pixel_Class::inject_view_content_event: hit ViewContent
+2024-06-16T02:03:25+00:00 DEBUG Tt4b_Pixel_Class::inject_view_content_event: Missing option "access_token"
+2024-06-16T05:18:58+00:00 DEBUG Tt4b_Pixel_Class::inject_add_to_cart_event: hit AddToCart
+2024-06-16T05:18:58+00:00 DEBUG Tt4b_Pixel_Class::inject_add_to_cart_event: Missing option "access_token"

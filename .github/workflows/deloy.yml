@@ -1,0 +1,52 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # Thay đổi trên nhánh main sẽ kích hoạt workflow
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      # Cài đặt SSH client để kết nối tới máy chủ
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+      
+      # Sử dụng webfactory/ssh-agent để sử dụng SSH key từ secrets
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      # Ping máy chủ để kiểm tra kết nối
+      - name: Ping remote server
+        run: ping -c 4 ${{ secrets.SERVER_SSH_HOST}}
+
+      # Kiểm tra kết nối SSH tới máy chủ
+      - name: Check SSH connectivity
+        run: nc -zv ${{ secrets.SERVER_SSH_HOST }} 22
+      
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_USERNAME}}
+          key: ${{ secrets.SERVER_SSH_KEY}}
+          port: 22
+          script: |
+            cd /var/www/html/wordpress
+            git pull origin main
+            sudo systemctl restart nginx
+            sudo systemctl restart php8.3-fpm
+            ./deploy.sh
+
+      # Kiểm tra kết quả triển khai
+      - name: Check deployment result
+        run: |
+          curl -sI http://${{ secrets.SERVER_SSH_HOST }}  # Kiểm tra trang chủ đã hoạt động
+          curl -sI http://${{ secrets.SERVER_SSH_HOST }}/wp-admin
