@@ -3,18 +3,14 @@ https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-comp
 
 ///////////////
 
-ERROR: for nginx  Cannot start service nginx: error while creating mount source path '/var/lib/docker/volumes/wordpress_data': mkdir /var/lib/docker: read-only file system
+sudo nano /etc/ssh/sshd_config
+hien@hien-VirtualBox:/SoftwareTechnology$ cd ~
+hien@hien-VirtualBox:~$ chmod 700 .ssh
+hien@hien-VirtualBox:~$ chmod 600 .ssh/authorized_keys
+hien@hien-VirtualBox:~$ sudo systemctl restart ssh
+Job for ssh.service failed because the control process exited with error code.
+See "systemctl status ssh.service" and "journalctl -xeu ssh.service" for details.
 
-Run echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-Run entrypoint.sh
-Will download drone-ssh-1.7.4-linux-amd64 from https://github.com/appleboy/drone-ssh/releases/download/v1.7.4
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-
-100 5580k  100 5580k    0     0  29.4M      0 --:--:-- --:--:-- --:--:-- 29.4M
 ======CMD======
 cd /var/www/html/wordpress
 git pull origin main
