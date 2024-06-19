@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          port: 22
+          port: ${{ secrets.SERVER_SSH_PORT}}
           script: |
             cd /var/www/html
             git pull origin main
