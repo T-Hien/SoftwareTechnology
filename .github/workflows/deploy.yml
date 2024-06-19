@@ -24,7 +24,8 @@ jobs:
         
       - name: Configure Nginx
         run: |
-          sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
+          cd nginx/sites-enabled/wordpress
+          start nginx
     
 
       - name: Start PHP-FPM and Nginx
