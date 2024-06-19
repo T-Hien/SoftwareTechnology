@@ -35,9 +35,9 @@ jobs:
       # Deploy application using SSH
       - name: Deploy application
         run: |
-          ssh -o StrictHostKeyChecking=no \
-              ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_SSH_HOST }} \
-              -p ${{ secrets.SERVER_PORT }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no 
+              "${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_SSH_HOST }}" 
+              -p "${{ secrets.SERVER_PORT }}" << 'EOF'
             cd /var/www/html/wordpress  # Đường dẫn tới WordPress trên máy chủ
             git pull origin main  # Lấy mã nguồn mới nhất từ repository
             sudo systemctl restart nginx  # Khởi động lại NGINX để áp dụng thay đổi
