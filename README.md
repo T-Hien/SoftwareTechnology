@@ -6,6 +6,10 @@ https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-comp
 
 ///////////////
 
+
+sudo git add .
+error: 'nginx/' does not have a commit checked out
+fatal: adding files failed
  sudo sshd -t -f /etc/ssh/sshd_config
 /etc/ssh/sshd_config: line 39: Bad configuration option: AllowUser
 /etc/ssh/sshd_config: terminating, 1 bad configuration options
