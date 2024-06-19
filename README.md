@@ -92,3 +92,83 @@ services:
 volumes:
   db_data:
   wordpress_data:
+
+
+  ///////////
+  name: CI/CD Pipeline for WordPress with Nginx and Reverse Proxy
+
+on:
+  push:
+    branches:
+      - main  # Thay đổi trên nhánh main sẽ kích hoạt workflow
+  pull_request:
+    branches:
+      - main  # Pull request vào nhánh main cũng sẽ kích hoạt workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PHP, Nginx, MySQL, and other dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-fpm nginx mysql-server php-mysql unzip
+
+        
+      - name: Configure Nginx
+        run: |
+          cd nginx\sites-enabled\wordpress
+          start nginx
+    
+
+      - name: Start PHP-FPM and Nginx
+        run: |
+          sudo service nginx start
+
+      - name: Download WordPress
+        run: |
+          wget -q https://wordpress.org/latest.zip
+          unzip -qq latest.zip -d wordpress
+
+      - name: Configure WordPress
+        run: |
+          sudo cp -r wordpress/* /var/www/html/
+          sudo chown -R www-data:www-data /var/www/html/
+          sudo find /var/www/html/ -type d -exec chmod 755 {} \;
+          sudo find /var/www/html/ -type f -exec chmod 644 {} \;
+          sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+          sudo sed -i 's/database_name_here/wordpress/' /var/www/html/wp-config.php
+          sudo sed -i 's/username_here/root/' /var/www/html/wp-config.php
+          sudo sed -i 's/password_here/password/' /var/www/html/wp-config.php
+          sudo sed -i 's/localhost/127.0.0.1/' /var/www/html/wp-config.php
+
+      - name: Test WordPress
+        run: |
+          curl -s localhost
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Nginx for Reverse Proxy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx
+
+      - name: Configure Reverse Proxy
+        run: |
+          sudo cp nginx/nginx.conf /etc/nginx/nginx.conf
+          sudo cp nginx/default /etc/nginx/sites-available/default
+          sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+      - name: Start Nginx Reverse Proxy
+        run: |
+          sudo service nginx start
