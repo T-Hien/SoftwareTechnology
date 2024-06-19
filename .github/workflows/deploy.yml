@@ -24,7 +24,7 @@ jobs:
         
       - name: Configure Nginx
         run: |
-          cd nginx/wordpress
+          cd nginx\wordpress
           sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
           start nginx
           
