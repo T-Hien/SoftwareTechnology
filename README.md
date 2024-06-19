@@ -2,14 +2,27 @@ https://chatgpt.com/share/3b89dd1c-12d1-439f-8fb2-b5642ac5764a
 https://azdigi.com/blog/kien-thuc-website/wordpress/cai-da-wordpress-docker-compose-nginx-apache-ssl/
 
 ///////////////
-
-sudo nano /etc/ssh/sshd_config
-hien@hien-VirtualBox:/SoftwareTechnology$ cd ~
-hien@hien-VirtualBox:~$ chmod 700 .ssh
-hien@hien-VirtualBox:~$ chmod 600 .ssh/authorized_keys
-hien@hien-VirtualBox:~$ sudo systemctl restart ssh
+sudo service ssh start
 Job for ssh.service failed because the control process exited with error code.
 See "systemctl status ssh.service" and "journalctl -xeu ssh.service" for details.
+hien@hien-VirtualBox:~
+
+ ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/usr/lib/systemd/system/ssh.service; enabled; preset: enab>
+     Active: failed (Result: exit-code) since Wed 2024-06-19 11:08:32 +07; 22s >
+   Duration: 1h 12min 8.495s
+TriggeredBy: × ssh.socket
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 12965 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=255/EXCE>
+        CPU: 6ms
+
+Jun 19 11:08:32 hien-VirtualBox systemd[1]: ssh.service: Scheduled restart job,>
+Jun 19 11:08:32 hien-VirtualBox systemd[1]: ssh.service: Start request repeated>
+Jun 19 11:08:32 hien-VirtualBox systemd[1]: ssh.service: Failed with result 'ex>
+Jun 19 11:08:32 hien-VirtualBox systemd[1]: Failed to start ssh.service - OpenB>
+~
+
 
 ======CMD======
 cd /var/www/html/wordpress
