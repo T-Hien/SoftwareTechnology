@@ -21,6 +21,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y php-fpm nginx mysql-server php-mysql unzip
 
+        
       - name: Configure Nginx
         run: |
           cd nginx/wordpress
