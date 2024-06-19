@@ -34,8 +34,8 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SERVER_SSH_PORT }}
-          username: hien
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_USERNAME}}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
@@ -48,5 +48,5 @@ jobs:
       # Kiểm tra kết quả triển khai
       - name: Check deployment result
         run: |
-          curl -sI http://${{ secrets.SERVER_HOST }}  # Kiểm tra trang chủ đã hoạt động
-          curl -sI http://${{ secrets.SERVER_HOST }}/wp-admin  # Kiểm tra trang quản trị WordPress
+          curl -sI http://${{ secrets.SERVER_SSH_HOST }}  # Kiểm tra trang chủ đã hoạt động
+          curl -sI http://${{ secrets.SERVER_SSH_HOST }}/wp-admin  # Kiểm tra trang quản trị WordPress
