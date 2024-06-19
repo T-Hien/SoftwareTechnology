@@ -29,7 +29,7 @@ jobs:
 
       # Kiểm tra kết nối SSH tới máy chủ
       - name: Check SSH connectivity
-        run: nc -zv ${{ secrets.SERVER_SSH_HOST }} ${{ secrets.SERVER_SSH_PORT}}
+        run: nc -zv ${{ secrets.SERVER_HOST }} ${{ secrets.SERVER_SSH_PORT}}
       
       # Triển khai qua SSH
       - name: Deploy via SSH
