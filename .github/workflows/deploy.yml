@@ -25,7 +25,7 @@ jobs:
 
       # Ping máy chủ để kiểm tra kết nối
       - name: Ping remote server
-        run: ping -c 4 ${{ secrets.SERVER_IP}}
+        run: ping -c 4 ${{ secrets.SERVER_SSH_HOST}}
 
       # Kiểm tra kết nối SSH tới máy chủ
       - name: Check SSH connectivity
