@@ -37,7 +37,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no 
               "${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_SSH_HOST }}" << 'EOF'
-            cd /var/www/html/wordpress  # Đường dẫn tới WordPress trên máy chủ
+            cd /var/www/html  # Đường dẫn tới WordPress trên máy chủ
             git pull origin main  # Lấy mã nguồn mới nhất từ repository
             sudo systemctl restart nginx  # Khởi động lại NGINX để áp dụng thay đổi
             sudo systemctl restart php8.3-fpm  # Khởi động lại PHP-FPM
