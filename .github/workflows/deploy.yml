@@ -25,11 +25,11 @@ jobs:
       
       # Ping máy chủ để kiểm tra kết nối
       - name: Ping remote server
-        run: ping -c 4 ${{ secrets.SERVER_SSH_HOST }}
+        run: ping -c 4 ${{ secrets.SERVER_HOST }}
 
       # Kiểm tra kết nối SSH tới máy chủ
       - name: Check SSH connectivity
-        run: nc -zv ${{ secrets.SERVER_SSH_HOST }} 22
+        run: nc -zv ${{ secrets.SERVER_SSH_HOST }} ${{ secrets.SERVER_SSH_PORT}}
       
       # Triển khai qua SSH
       - name: Deploy via SSH
