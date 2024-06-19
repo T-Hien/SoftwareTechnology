@@ -29,14 +29,14 @@ jobs:
 
       # Kiểm tra kết nối SSH tới máy chủ
       - name: Check SSH connectivity
-        run: nc -zv ${{ secrets.SERVER_HOST }} 22
+        run: nc -zv ${{ secrets.SERVER_SSH_HOST }} 22
       
       # Triển khai ứng dụng bằng lệnh SSH
       # Deploy application using SSH
       - name: Deploy application
         run: |
           ssh -o StrictHostKeyChecking=no \
-              ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} \
+              ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_SSH_HOST }} \
               -p ${{ secrets.SERVER_PORT }} << 'EOF'
             cd /var/www/html/wordpress  # Đường dẫn tới WordPress trên máy chủ
             git pull origin main  # Lấy mã nguồn mới nhất từ repository
