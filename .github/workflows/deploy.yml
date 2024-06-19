@@ -17,7 +17,7 @@ jobs:
         run: |
           # Command to install any dependencies needed
 
-      - name: Setup SSH
+      - name: Setup SSH KEY
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
