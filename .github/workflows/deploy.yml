@@ -31,23 +31,32 @@ jobs:
       - name: Check SSH connectivity
         run: nc -zv ${{ secrets.SERVER_HOST }} ${{ secrets.SERVER_SSH_PORT}}
       
-      # Triển khai qua SSH
+       # Triển khai qua SSH
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_SSH_PORT}}
+          port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
+            echo "Pulling latest code from git"
             git pull origin main
+
+            echo "Restarting nginx"
             sudo systemctl restart nginx
+
+            echo "Restarting php8.3-fpm"
             sudo systemctl restart php8.3-fpm
+
+            echo "Updating packages"
             sudo apt update
+
+            echo "Installing nginx"
             sudo apt install -y nginx
+
+            echo "Running deploy script"
             ./deploy.sh
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       
       # Kiểm tra kết quả triển khai
       - name: Check deployment result
