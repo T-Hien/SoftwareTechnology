@@ -43,7 +43,11 @@ jobs:
             git pull origin main
             sudo systemctl restart nginx
             sudo systemctl restart php8.3-fpm
+            sudo apt update
+            sudo apt install -y nginx
             ./deploy.sh
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       
       # Kiểm tra kết quả triển khai
       - name: Check deployment result
