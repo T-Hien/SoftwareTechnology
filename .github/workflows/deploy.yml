@@ -27,10 +27,7 @@ jobs:
       - name: Ping remote server
         run: ping -c 4 ${{ secrets.SERVER_HOST }}
 
-      # Kiểm tra kết nối SSH tới máy chủ
-      - name: Check SSH connectivity
-        run: nc -zv ${{ secrets.SERVER_HOST }} ${{ secrets.SERVER_SSH_PORT}}
-      - name: Deploy via SSH - Restart Nginx
+      - name: Pull latest code
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -38,9 +35,12 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            echo "Restarting nginx"
-            sudo systemctl restart nginx
-
+            cd /path/to/your/repo || exit
+            git status
+            git pull origin main || { echo 'Git pull failed'; exit 1; }
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+          
       - name: Deploy via SSH - Restart PHP
         uses: appleboy/ssh-action@master
         with:
